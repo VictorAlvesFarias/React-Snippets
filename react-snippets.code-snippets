@@ -1,4 +1,53 @@
 {
+    "Form": {
+        "prefix": "form",
+        "body": [
+            "const formSchema = z.object({",
+            "});",
+            "",
+            "const { formState, control, handleSubmit, register } = useForm<z.infer<typeof formSchema>>({",
+            "    resolver: zodResolver(formSchema)",
+            "});",
+        ]
+    },
+    "useQuery": {
+        "prefix": "useQuery",
+        "body": [
+            "    const [finished, setQuerys] = useQuery()"
+        ]
+    },
+    "Query": {
+        "prefix": "query",
+        "body": [
+            "setQuerys(() => {",
+            "   ",
+            "})",
+        ]
+    },
+    "Querys": {
+        "prefix": "querys",
+        "body": [
+            "setQuerys([",
+            "   () => {",
+            "       ",
+            "   }",
+            "])"
+        ]
+    },
+    "useState": {
+        "prefix": "useState",
+        "body": [
+            "const [state, setState] = useState()"
+        ]
+    },
+    "useEffect":{
+        "prefix": "useEffect",
+        "body": [
+            "useEffect(() => {",
+            "   ",
+            "    }, [])"
+        ]
+    },
     "Component": {
         "prefix": "component",
         "body": [
@@ -40,118 +89,4 @@
         ],
         "description": "Cria um componente React Accordion"
     },
-    "Page": {
-        "prefix": "page",
-        "body": [
-            "import { useEffect, useState } from 'react';",
-            "import { z } from 'zod';",
-            "import { number } from '../../utils/extensions/zod';",
-            "import Content from '../../components/content';",
-            "import { Form } from '../../components/form';",
-            "import React from 'react';",
-            "import { Controller, useForm } from 'react-hook-form';",
-            "import DropdownContext from '../../components/dropdown-context';",
-            "import DropdownMenu from '../../components/dropdown-menu';",
-            "import DropdownOption from '../../components/dropdown-option';",
-            "import DropdownRoot from '../../components/dropdown-root';",
-            "import InputRoot from '../../components/input-root';",
-            "import InputText from '../../components/input-text';",
-            "import Label from '../../components/label';",
-            "import Span from '../../components/span';",
-            "import { zodResolver } from '@hookform/resolvers/zod';",
-            "import { situationService } from '../../services/situation-service';",
-            "",
-            "function ${1:${TM_FILENAME_BASE/(?:^|-)(\\w)/${1:/upcase}/g}}() {",
-            "    const [loading, setLoading] = useState({",
-            "        screen: false",
-            "    });",
-            "    const [screen, setScreen] = useState({",
-            "        disabled: true",
-            "    });",
-            "    const [situations, setSituations] = useState<any>({",
-            "        default: null",
-            "    });",
-            "    const formSchema = z.object({",
-            "        name: z.string().nonempty('Campo obrigatório'),",
-            "        email: z.string().nonempty('Campo obrigatório'),",
-            "        number: z.string().nonempty('Campo obrigatório').refine(e => number(e)),",
-            "        situationValue: z.number({ message: 'Campo Inválido' }),",
-            "    });",
-            "    const { formState, control, handleSubmit, register } = useForm<z.infer<typeof formSchema>>({",
-            "        resolver: zodResolver(formSchema)",
-            "    });",
-            "",
-            "    function handleOnSubmit(data) {",
-            "        // Implemente sua lógica de submissão aqui",
-            "    }",
-            "",
-            "    async function onInit() {",
-            "        await situationService.getSituations()",
-            "            .then(e => {",
-            "                setSituations({ ...situations, default: e });",
-            "            });",
-            "    }",
-            "",
-            "    useEffect(() => {",
-            "        onInit();",
-            "    }, []);",
-            "",
-            "    return (",
-            "        <Content>",
-            "            <Form onSubmit={handleSubmit(handleOnSubmit)} >",
-            "                <InputRoot>",
-            "                    <Label>Situação</Label>",
-            "                    <Controller",
-            "                        control={control}",
-            "                        name='situationValue'",
-            "                        render={({ field, field: { onChange } }) => (",
-            "                            <DropdownContext>",
-            "                                <DropdownRoot placeholder='Situação' {...field} disabled={screen.disabled}>",
-            "                                    <DropdownMenu>",
-            "                                        {situations.default?.map((e, index) => (",
-            "                                            <DropdownOption",
-            "                                                key={index}",
-            "                                                defaultValue={e.value === field.value}",
-            "                                                onClick={onChange}",
-            "                                                value={e.value}",
-            "                                                label={e.label}",
-            "                                            />",
-            "                                        ))}",
-            "                                    </DropdownMenu>",
-            "                                </DropdownRoot>",
-            "                            </DropdownContext>",
-            "                        )}",
-            "                    />",
-            "                    <Span variation='error'>{formState.errors.situationValue?.message}</Span>",
-            "                </InputRoot>",
-            "                <InputRoot>",
-            "                    <Label>Nome</Label>",
-            "                    <InputText {...register('name', { disabled: screen.disabled })} placeholder='Nome' />",
-            "                    <Span variation='error'>{formState.errors.name?.message}</Span>",
-            "                </InputRoot>",
-            "            </Form>",
-            "        </Content>",
-            "    );",
-            "}",
-            "",
-            "export default ${1:${TM_FILENAME_BASE/(?:^|-)(\\w)/${1:/upcase}/g}};"
-        ],
-        "description": "Creates a React functional component with form handling and state management."
-    },
-    "Form": {
-        "prefix": "form",
-        "body": [
-            "const formSchema = z.object({",
-            "    name: z.string().nonempty('Campo obrigatório'),",
-            "    email: z.string().nonempty('Campo obrigatório'),",
-            "    number: z.string().nonempty('Campo obrigatório').refine(e => number(e)),",
-            "    situationValue: z.number({ message: 'Campo Inválido' }),",
-            "});",
-            "",
-            "const { formState, control, handleSubmit, register } = useForm<z.infer<typeof formSchema>>({",
-            "    resolver: zodResolver(formSchema)",
-            "});",
-        ],
-        "description": "Creates a React Hook Form setup with Zod schema validation."
-    }
 }
